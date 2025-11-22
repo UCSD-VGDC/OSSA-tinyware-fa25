@@ -49,6 +49,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private Weapon currentWeapon;
     private bool canAttack = true;
+    public static readonly float enemyLayer = 7;
 
     private void Awake()
     {
@@ -136,6 +137,20 @@ public class Player : MonoBehaviour, IDamageable
             Experience = 0;
 
             // TODO: give upgrade prompts
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Player collided with " + other.gameObject.name);
+        if (other.gameObject.layer == enemyLayer)
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                TakeDamage(enemy.Damage);
+                Destroy(other.gameObject);
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public int Level = 1;
     public int ExpNeeded => GetExpForLevel(Level);
+    public float EnemySpeedMultiplier => GetEnemySpeedMultiplier(Level);
 
     [SerializeField] private Weapon startingWeapon;
     
@@ -20,4 +21,5 @@ public class GameManager : MonoBehaviour
     }
 
     private int GetExpForLevel(int level) { return level * 5; }
+    private float GetEnemySpeedMultiplier(int level) { return 2 + level * 0.1f; }
 }
