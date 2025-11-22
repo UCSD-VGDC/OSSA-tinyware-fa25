@@ -11,13 +11,13 @@ public class CustomButton : MonoBehaviour
     }
 
     public ButtonType buttonType;
-    [SerializeField] private Image image;
+    [SerializeField] protected Image image;
     [SerializeField] private Sprite releasedSprite;
     [SerializeField] private Sprite pressedSprite;
     [SerializeField] private RectTransform shiftedElement;
     private Vector2 originalPosition = new(-1, -1);
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         switch (buttonType)
         {

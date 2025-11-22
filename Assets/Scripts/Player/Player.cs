@@ -7,7 +7,9 @@ public class Player : MonoBehaviour, IDamageable
     public static Player Instance;
     public const int ENEMY_LAYER = 7;
 
-    [SerializeField] private float maxHealth = 5f;
+    public float MaxHealth { get; private set; } = 5f;
+    public float RandomHealChance { get; private set; } = 0f;
+    public float RandomAmmoChance { get; private set; } = 0f;
     [SerializeField] private GameObject visuals;
     public GameObject ProjectileSpawnPoint;
     private Animator animator;
@@ -28,7 +30,7 @@ public class Player : MonoBehaviour, IDamageable
         private set
         {
             health = value;
-            healthBar.fillAmount = health / maxHealth;
+            healthBar.fillAmount = health / MaxHealth;
         }
     }
 
@@ -68,7 +70,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public void OnStart(Weapon startingWeapon)
     {
-        Health = maxHealth;
+        Health = MaxHealth;
         Experience = 0;
         EquipWeapon(startingWeapon);
         animator = GetComponent<Animator>();
@@ -170,12 +172,16 @@ public class Player : MonoBehaviour, IDamageable
     public void TakeDamage(float damageAmount)
     {
         Health -= damageAmount;
-        if (Health <= 0)
+        if (Health > MaxHealth)
         {
-            // TODO: die
-            Health = 0;
+            Health = MaxHealth;
         }
-        healthBar.fillAmount = Health / maxHealth;
+        else if (Health <= 0)
+        {
+            Health = 0;
+            GameManager.Instance.HandlePlayerDeath();
+        }
+        healthBar.fillAmount = Health / MaxHealth;
     }
 
     public void GainExperience(int expAmount)
@@ -190,11 +196,28 @@ public class Player : MonoBehaviour, IDamageable
     public void PlayerLevelUp()
     {
         Experience = 0;
-        Health = maxHealth;
+        // Health = maxHealth;
         Ammo = currentWeapon.MaxAmmo;
     }
 
-    public void IncreaseMaxHealth(int amount) { maxHealth += amount; }
+    public void TryApplyRandomUpgrades()
+    {
+        if (Random.value < RandomHealChance)
+        {
+            TakeDamage(-1);
+        }
+        if (Random.value < RandomAmmoChance)
+        {
+            Ammo++;
+        }
+    }
+
+    public void IncreaseMaxHealth(int amount)
+    {
+        float healthPercentage = Health / MaxHealth;
+        MaxHealth += amount;
+        Health = MaxHealth * healthPercentage;
+    }
     public void IncreaseMaxAmmo(int amount)
     {
         currentWeapon.MaxAmmo += amount;
@@ -209,4 +232,6 @@ public class Player : MonoBehaviour, IDamageable
     public void DecreaseCooldown(float multiplier) { currentWeapon.Cooldown *= multiplier; }
     public void IncreaseSpeed(float multiplier) { currentWeapon.ProjectileSpeed *= multiplier; }
     public void IncreaseProjectileHits(int amount) { currentWeapon.ProjectileHits += amount; }
+    public void IncreaseRandomHealChance(float amount) { RandomHealChance += amount; if (RandomHealChance > 1f) RandomHealChance = 1f; }
+    public void IncreaseRandomAmmoChance(float amount) { RandomAmmoChance += amount; if (RandomAmmoChance > 1f) RandomAmmoChance = 1f; }
 }

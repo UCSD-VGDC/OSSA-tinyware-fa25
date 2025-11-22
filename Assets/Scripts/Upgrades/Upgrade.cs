@@ -2,13 +2,16 @@ public class Upgrade
 {
     public enum UpgradeType
     {
-        HealthIncrease,
+        Heal,
+        MaxHealthIncrease,
         MaxAmmoIncrease,
         AmmoRegenTimeDecrease,
         DamageIncrease,
         CooldownDecrease,
         SpeedIncrease,
-        ProjectileHitsIncrease
+        ProjectileHitsIncrease,
+        RandomHealChance,
+        RandomAmmoChance,
     }
 
     public string Description;
@@ -26,13 +29,16 @@ public class Upgrade
     {
         return type switch
         {
-            UpgradeType.HealthIncrease => () => Player.Instance.IncreaseMaxHealth(5),
+            UpgradeType.Heal => () => Player.Instance.TakeDamage(-3),
+            UpgradeType.MaxHealthIncrease => () => Player.Instance.IncreaseMaxHealth(5),
             UpgradeType.MaxAmmoIncrease => () => Player.Instance.IncreaseMaxAmmo(2),
-            UpgradeType.AmmoRegenTimeDecrease => () => Player.Instance.DecreaseAmmoRegenTime(0.9f),
+            UpgradeType.AmmoRegenTimeDecrease => () => Player.Instance.DecreaseAmmoRegenTime(0.75f),
             UpgradeType.DamageIncrease => () => Player.Instance.IncreaseDamage(1.25f),
-            UpgradeType.CooldownDecrease => () => Player.Instance.DecreaseCooldown(0.8f),
+            UpgradeType.CooldownDecrease => () => Player.Instance.DecreaseCooldown(0.85f),
             UpgradeType.SpeedIncrease => () => Player.Instance.IncreaseSpeed(1.1f),
             UpgradeType.ProjectileHitsIncrease => () => Player.Instance.IncreaseProjectileHits(1),
+            UpgradeType.RandomHealChance => () => Player.Instance.IncreaseRandomHealChance(0.1f),
+            UpgradeType.RandomAmmoChance => () => Player.Instance.IncreaseRandomAmmoChance(0.1f),
             _ => null,
         };
     }

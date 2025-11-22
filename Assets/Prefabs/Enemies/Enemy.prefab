@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 1
   Damage: 1
-  MoveSpeed: 2
+  MoveSpeed: 1.75
   ExperienceReward: 1
   visuals: {fileID: 858910984991777636}
 --- !u!61 &1623661553487409599

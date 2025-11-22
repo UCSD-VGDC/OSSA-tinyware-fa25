@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             // Enemy defeated
             Player.Instance.GainExperience(ExperienceReward);
+            Player.Instance.TryApplyRandomUpgrades();
             Destroy(gameObject);
         }
     }

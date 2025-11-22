@@ -6,14 +6,14 @@ public class GameManager : MonoBehaviour
 {
     public enum GameState
     {
-        Menu,
         Combat,
         Upgrade,
-        NoInput
+        NoInput,
+        DeathScreen
     }
 
     public static GameManager Instance;
-    public GameState CurrentState { get; private set; } = GameState.Menu;
+    public GameState CurrentState { get; private set; } = GameState.Combat;
 
     private int level;
     public int Level
@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject UpgradeUI;
     [SerializeField] private TMPro.TMP_Text upgradeDescriptionTextL;
     [SerializeField] private TMPro.TMP_Text upgradeDescriptionTextR;
+    [SerializeField] private RerollButton rerollButton;
     private Upgrade LeftUpgrade;
     private Upgrade RightUpgrade;
     private bool canReroll = true;
@@ -51,15 +52,21 @@ public class GameManager : MonoBehaviour
     [Space(10)]
     [SerializeField] private GameObject CombatOnlyUI;
 
+    [Space(10)]
+    [SerializeField] private GameObject DeathUI;
+
     private List<Upgrade> availableUpgrades = new()
     {
-        new("Increase Max Health by 5", Upgrade.UpgradeType.HealthIncrease),
-        new("Increase Max Ammo by 2", Upgrade.UpgradeType.MaxAmmoIncrease),
-        new("Decrease Ammo Regen Time by 10%", Upgrade.UpgradeType.AmmoRegenTimeDecrease),
-        new("Increase Damage by 25%", Upgrade.UpgradeType.DamageIncrease),
-        new("Decrease Cooldown by 20%", Upgrade.UpgradeType.CooldownDecrease),
-        new("Increase Projectile Speed by 10%", Upgrade.UpgradeType.SpeedIncrease),
-        new("Increase Projectile Hits by 1", Upgrade.UpgradeType.ProjectileHitsIncrease)
+        new("+3 Health", Upgrade.UpgradeType.Heal),
+        new("+5 Max Health", Upgrade.UpgradeType.MaxHealthIncrease),
+        new("+2 Max Ammo", Upgrade.UpgradeType.MaxAmmoIncrease),
+        new("-25% Ammo Regen Time", Upgrade.UpgradeType.AmmoRegenTimeDecrease),
+        new("+25% Damage", Upgrade.UpgradeType.DamageIncrease),
+        new("-15% Attack Cooldown", Upgrade.UpgradeType.CooldownDecrease),
+        new("+10% Projectile Speed", Upgrade.UpgradeType.SpeedIncrease),
+        new("+1 Enemies Hit per Projectile", Upgrade.UpgradeType.ProjectileHitsIncrease),
+        new("+10% Chance for +1 Health on Kill", Upgrade.UpgradeType.RandomHealChance),
+        new("+10% Chance for +1 Ammo on Kill", Upgrade.UpgradeType.RandomAmmoChance),
     };
 
     private void Awake()
@@ -72,6 +79,7 @@ public class GameManager : MonoBehaviour
     {
         CombatOnlyUI.SetActive(true);
         UpgradeUI.SetActive(false);
+        DeathUI.SetActive(false);
         CurrentState = GameState.Combat;
         Level = 1;
         Player.Instance.OnStart(startingWeapon);
@@ -83,16 +91,16 @@ public class GameManager : MonoBehaviour
     
     private void OnEnable()
     {
-        InputController.OnButtonLeftPressedEvent += SelectUpgradeLeft;
-        InputController.OnButtonRightPressedEvent += SelectUpgradeRight;
-        InputController.OnBothButtonsPressedEvent += RerollUpgrades;
+        InputController.OnButtonLeftPressedEvent += MenuButtonLeft;
+        InputController.OnButtonRightPressedEvent += MenuButtonRight;
+        InputController.OnBothButtonsPressedEvent += MenuButtonBoth;
     }
 
     private void OnDisable()
     {
-        InputController.OnButtonLeftPressedEvent -= SelectUpgradeLeft;
-        InputController.OnButtonRightPressedEvent -= SelectUpgradeRight;
-        InputController.OnBothButtonsPressedEvent -= RerollUpgrades;
+        InputController.OnButtonLeftPressedEvent -= MenuButtonLeft;
+        InputController.OnButtonRightPressedEvent -= MenuButtonRight;
+        InputController.OnBothButtonsPressedEvent -= MenuButtonBoth;
     }
 
     private IEnumerator SpawnCoroutine()
@@ -111,18 +119,28 @@ public class GameManager : MonoBehaviour
 
     public void ShowUpgradeOptions()
     {
-        int leftUpgradeIdx = Random.Range(0, availableUpgrades.Count);
+        int leftUpgradeIdx = -1;
+        if (Player.Instance.Health < Player.Instance.MaxHealth && canReroll)
+        {
+            // ensure Heal upgrade is available if player is not at full health before rerolling
+            leftUpgradeIdx = 0;
+        }
+        else
+        {
+            leftUpgradeIdx = Random.Range(1, availableUpgrades.Count);
+        }
         LeftUpgrade = availableUpgrades[leftUpgradeIdx];
         upgradeDescriptionTextL.text = LeftUpgrade.Description;
 
         // prevent selecting the same upgrade twice
         availableUpgrades.RemoveAt(leftUpgradeIdx);
 
-        RightUpgrade = availableUpgrades[Random.Range(0, availableUpgrades.Count)];
+        int rightMinIdx = Player.Instance.Health < Player.Instance.MaxHealth ? 0 : 1;
+        RightUpgrade = availableUpgrades[Random.Range(rightMinIdx, availableUpgrades.Count)];
         upgradeDescriptionTextR.text = RightUpgrade.Description;
 
         // restore the removed upgrade back to the pool
-        availableUpgrades.Add(LeftUpgrade);
+        availableUpgrades.Insert(leftUpgradeIdx, LeftUpgrade);
 
         CurrentState = GameState.NoInput;
         CombatOnlyUI.SetActive(false);
@@ -137,26 +155,34 @@ public class GameManager : MonoBehaviour
         CurrentState = GameState.Upgrade;
     }
 
-    private void SelectUpgradeLeft(InputController controller)
+    private void MenuButtonLeft(InputController controller)
     {
-        if (!CurrentState.Equals(GameState.Upgrade)) return;
-
-        HandleSelectUpgrade(LeftUpgrade);
+        if (CurrentState.Equals(GameState.Upgrade)) HandleSelectUpgrade(LeftUpgrade);
+        else if (CurrentState.Equals(GameState.DeathScreen))
+        {
+            // TODO: Restart level
+            Debug.Log("Restarting Level...");
+            // UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        }
     }
 
-    private void SelectUpgradeRight(InputController controller)
+    private void MenuButtonRight(InputController controller)
     {
-        if (!CurrentState.Equals(GameState.Upgrade)) return;
-
-        HandleSelectUpgrade(RightUpgrade);
+        if (CurrentState.Equals(GameState.Upgrade)) HandleSelectUpgrade(RightUpgrade);
+        else if (CurrentState.Equals(GameState.DeathScreen))
+        {
+            // TODO: Exit to main menu
+            Debug.Log("Exiting to Main Menu...");
+        }
     }
 
-    private void RerollUpgrades(InputController controller)
+    private void MenuButtonBoth(InputController controller)
     {
         if (!CurrentState.Equals(GameState.Upgrade) || !canReroll) return;
 
-        ShowUpgradeOptions();
         canReroll = false;
+        rerollButton.ToggleEnabled(false);
+        ShowUpgradeOptions();
     }
 
     public void HandleSelectUpgrade(Upgrade selectedUpgrade)
@@ -165,19 +191,30 @@ public class GameManager : MonoBehaviour
         Level++;
         levelText.text = $"Level {Level}";
         Player.Instance.PlayerLevelUp();
-        canReroll = true;
         UpgradeUI.SetActive(false);
+        canReroll = true;
+        rerollButton.ToggleEnabled(true);
         CombatOnlyUI.SetActive(true);
         CurrentState = GameState.Combat;
         Time.timeScale = 1f;
     }
 
+    public void HandlePlayerDeath()
+    {
+        CurrentState = GameState.NoInput;
+        Time.timeScale = 0f;
+        CombatOnlyUI.SetActive(false);
+        UpgradeUI.SetActive(false);
+        DeathUI.SetActive(true);
+        CurrentState = GameState.DeathScreen;
+    }
+
     private int GetExpForLevel(int level) { return level * 5; }
-    private float GetEnemySpeedMultiplier(int level) { return 2 + level * 0.1f; }
+    private float GetEnemySpeedMultiplier(int level) { return 2 + level * 0.15f; }
     private (float, float) GetEnemySpawnIntervalRange(int level)
     {
-        float min = Mathf.Max(0.5f, 1.5f - level * 0.1f);
-        float max = Mathf.Max(1.0f, 3.0f - level * 0.2f);
+        float min = Mathf.Max(0.1f, 1.5f - level % 10 * 0.15f);
+        float max = Mathf.Max(0.2f, 3.0f - level % 10 * 0.3f);
         return (min, max);
     }
 }
