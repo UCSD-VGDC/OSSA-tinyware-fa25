@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{bc32015a-bb6e-48cf-a0ad-7b226a261ad4}">
+		<property name="assetPath">
+			<value>GOREMisc_SMorph_Gore - Thumps Boxing Glove on Cushion [2025-11-21 205058].wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.859375</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6766642b-e64e-4136-bda9-77f85d60575d}</destination>
+		</relationship>
+	</object>
+</objects>

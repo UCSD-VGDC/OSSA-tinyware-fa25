@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{36f1319c-3454-4cb8-9cf5-37f24326e26a}">
+		<property name="assetPath">
+			<value>GOREMisc_SMorph_Gore - Thumps Leather Belt Crack [2025-11-21 205825].wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.6796875</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6766642b-e64e-4136-bda9-77f85d60575d}</destination>
+		</relationship>
+	</object>
+</objects>
