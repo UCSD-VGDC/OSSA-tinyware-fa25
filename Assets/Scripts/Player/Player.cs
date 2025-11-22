@@ -7,7 +7,7 @@ public class Player : MonoBehaviour, IDamageable
     public static Player Instance;
     public const int ENEMY_LAYER = 7;
 
-    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private float maxHealth = 5f;
     [SerializeField] private GameObject visuals;
 
     [Space(10)]
@@ -88,14 +88,26 @@ public class Player : MonoBehaviour, IDamageable
     private void AttackLeft(InputController controller)
     {
         visuals.transform.localScale = new Vector3(-1, 1, 1);
-        if (!canAttack) return;
+
+        if (!GameManager.Instance.CurrentState.Equals(GameManager.GameState.Combat) || !canAttack || Ammo <= 0)
+        {
+            // TODO: play no ammo sfx
+            return;
+        }
+
         HandleAttack();
     }
 
     private void AttackRight(InputController controller)
     {
         visuals.transform.localScale = new Vector3(1, 1, 1);
-        if (!canAttack) return;
+
+        if (!GameManager.Instance.CurrentState.Equals(GameManager.GameState.Combat) || !canAttack || Ammo <= 0)
+        {
+            // TODO: play no ammo sfx
+            return;
+        }
+
         HandleAttack();
     }
 
@@ -103,6 +115,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         currentWeapon.Attack(visuals.transform.localScale.x > 0 ? 1 : -1);
         Ammo--;
+        // TODO: play attack sfx
         StartCoroutine(AttackCooldown());
     }
 
@@ -134,10 +147,23 @@ public class Player : MonoBehaviour, IDamageable
         {
             // handle level up
             Debug.Log($"Level Up: {GameManager.Instance.Level} -> {GameManager.Instance.Level + 1}, EXP Needed: {GameManager.Instance.ExpNeeded}");
-            GameManager.Instance.Level++;
-            Experience = 0;
 
-            // TODO: give upgrade prompts
+            GameManager.Instance.ShowUpgradeOptions();
         }
     }
+
+    public void PlayerLevelUp()
+    {
+        Experience = 0;
+        Health = maxHealth;
+        Ammo = currentWeapon.MaxAmmo;
+    }
+
+    public void IncreaseMaxHealth(int amount) { maxHealth += amount; }
+    public void IncreaseMaxAmmo(int amount) { currentWeapon.MaxAmmo += amount; }
+    public void DecreaseAmmoRegenTime(float multiplier) { currentWeapon.AmmoRegenTime *= multiplier; }
+    public void IncreaseDamage(float multiplier) { currentWeapon.Damage *= multiplier; }
+    public void DecreaseCooldown(float multiplier) { currentWeapon.Cooldown *= multiplier; }
+    public void IncreaseSpeed(float multiplier) { currentWeapon.ProjectileSpeed *= multiplier; }
+    public void IncreaseProjectileHits(int amount) { currentWeapon.ProjectileHits += amount; }
 }
