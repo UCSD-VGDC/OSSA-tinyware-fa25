@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] private float maxHealth = 5f;
     [SerializeField] private GameObject visuals;
+    private Animator animator;
 
     [Space(10)]
     [SerializeField] private Image healthBar;
@@ -68,6 +69,7 @@ public class Player : MonoBehaviour, IDamageable
         Health = maxHealth;
         Experience = 0;
         EquipWeapon(startingWeapon);
+        animator = GetComponent<Animator>();
     }
     
     private void OnEnable()
@@ -121,6 +123,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         currentWeapon.Attack(visuals.transform.localScale.x > 0 ? 1 : -1);
         Ammo--;
+        animator.SetTrigger("shoot");
         // TODO: play attack sfx
         StartCoroutine(AttackCooldown());
     }
