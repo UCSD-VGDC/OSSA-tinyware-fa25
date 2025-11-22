@@ -12,6 +12,8 @@ public class Projectile : MonoBehaviour
 
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         rb.linearVelocity = new Vector2(speed * direction, 0);
+
+        Destroy(gameObject, 10f);
     }
 
     void OnTriggerEnter2D(Collider2D other)

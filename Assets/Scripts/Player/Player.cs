@@ -13,6 +13,9 @@ public class Player : MonoBehaviour, IDamageable
     [Space(10)]
     [SerializeField] private Image healthBar;
     [SerializeField] private Image ammoBar;
+    [SerializeField] private Image ammoRegenBar;
+    [SerializeField] private GameObject ammoSegmentContainer;
+    [SerializeField] private GameObject ammoSegmentPrefab;
     [SerializeField] private Image expBar;
 
     private float health;
@@ -32,10 +35,13 @@ public class Player : MonoBehaviour, IDamageable
         get { return ammo; }
         private set
         {
+            if (AmmoRegenCoroutine != null) StopCoroutine(AmmoRegenCoroutine);
+            AmmoRegenCoroutine = StartCoroutine(AmmoRegen());
             ammo = value;
             ammoBar.fillAmount = (float)ammo / currentWeapon.MaxAmmo;
         }
     }
+    private Coroutine AmmoRegenCoroutine;
 
     private int experience;
     public int Experience
@@ -126,17 +132,36 @@ public class Player : MonoBehaviour, IDamageable
         canAttack = true;
     }
 
+    private IEnumerator AmmoRegen()
+    {
+        float elapsed = 0f;
+        while (elapsed < currentWeapon.AmmoRegenTime)
+        {
+            elapsed += Time.deltaTime;
+            ammoRegenBar.fillAmount = (Ammo + (elapsed / currentWeapon.AmmoRegenTime)) / currentWeapon.MaxAmmo;
+            yield return null;
+        }
+
+        if (Ammo < currentWeapon.MaxAmmo)
+        {
+            Ammo++;
+        }
+    }
+
     public void EquipWeapon(Weapon newWeapon)
     {
-        currentWeapon = newWeapon;
-        Ammo = newWeapon.MaxAmmo;
+        currentWeapon = Instantiate(newWeapon);
+        Ammo = currentWeapon.MaxAmmo;
     }
 
     public void TakeDamage(float damageAmount)
     {
         Health -= damageAmount;
-        if (Health < 0) Health = 0;
-        Debug.Log($"Player took damage: {damageAmount}, Current Health: {Health}");
+        if (Health <= 0)
+        {
+            // TODO: die
+            Health = 0;
+        }
         healthBar.fillAmount = Health / maxHealth;
     }
 
@@ -145,9 +170,6 @@ public class Player : MonoBehaviour, IDamageable
         Experience += expAmount;
         if (Experience >= GameManager.Instance.ExpNeeded)
         {
-            // handle level up
-            Debug.Log($"Level Up: {GameManager.Instance.Level} -> {GameManager.Instance.Level + 1}, EXP Needed: {GameManager.Instance.ExpNeeded}");
-
             GameManager.Instance.ShowUpgradeOptions();
         }
     }
@@ -160,7 +182,14 @@ public class Player : MonoBehaviour, IDamageable
     }
 
     public void IncreaseMaxHealth(int amount) { maxHealth += amount; }
-    public void IncreaseMaxAmmo(int amount) { currentWeapon.MaxAmmo += amount; }
+    public void IncreaseMaxAmmo(int amount)
+    {
+        currentWeapon.MaxAmmo += amount;
+        for (int i = 0; i < amount; i++)
+        {
+            Instantiate(ammoSegmentPrefab, ammoSegmentContainer.transform);
+        }
+    }
     public void DecreaseAmmoRegenTime(float multiplier) { currentWeapon.AmmoRegenTime *= multiplier; }
     public void IncreaseDamage(float multiplier) { currentWeapon.Damage *= multiplier; }
     public void DecreaseCooldown(float multiplier) { currentWeapon.Cooldown *= multiplier; }

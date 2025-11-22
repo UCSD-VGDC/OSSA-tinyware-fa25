@@ -15,6 +15,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 3157742190695240445, guid: 217739fc85eb2594292e809a5801346e, type: 3}
   Damage: 1
   MaxAmmo: 5
+  AmmoRegenTime: 2
   Cooldown: 0.5
   ProjectileSpeed: 5
   ProjectileHits: 1
