@@ -160,9 +160,8 @@ public class GameManager : MonoBehaviour
         if (CurrentState.Equals(GameState.Upgrade)) HandleSelectUpgrade(LeftUpgrade);
         else if (CurrentState.Equals(GameState.DeathScreen))
         {
-            // TODO: Restart level
-            Debug.Log("Restarting Level...");
-            // UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+            Time.timeScale = 1f;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
     }
 
@@ -171,8 +170,8 @@ public class GameManager : MonoBehaviour
         if (CurrentState.Equals(GameState.Upgrade)) HandleSelectUpgrade(RightUpgrade);
         else if (CurrentState.Equals(GameState.DeathScreen))
         {
-            // TODO: Exit to main menu
-            Debug.Log("Exiting to Main Menu...");
+            Time.timeScale = 1f;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
     }
 

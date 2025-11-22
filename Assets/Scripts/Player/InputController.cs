@@ -83,6 +83,12 @@ public class InputController : MonoBehaviour
 
     private void OnDestroy()
     {
+        OnButtonLeftPressedEvent = null;
+        OnButtonRightPressedEvent = null;
+        OnBothButtonsPressedEvent = null;
+        OnButtonLeftReleasedEvent = null;
+        OnButtonRightReleasedEvent = null;
+        OnBothButtonsReleasedEvent = null;
         inputActions.Player.Disable();
     }
 }
