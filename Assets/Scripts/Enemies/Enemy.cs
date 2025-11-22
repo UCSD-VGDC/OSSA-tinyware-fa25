@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour, IDamageable
         visuals.transform.localScale = new Vector3(moveDirection, 1, 1);
         rb.linearVelocity = new Vector2(liveMoveSpeed * moveDirection, 0);
         animator = GetComponent<Animator>();
-        animator.SetFloat("speed", GameManager.Instance.EnemySpeedMultiplier - 1f);
+        animator.SetFloat("speed", GameManager.Instance.EnemySpeedMultiplier - 1.15f);
     }
 
     public void TakeDamage(float damageAmount)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +33,8 @@ public class GameManager : MonoBehaviour
     }
 
     public int ExpNeeded => GetExpForLevel(Level);
-    public float EnemySpeedMultiplier => GetEnemySpeedMultiplier(Level);
+    // public float EnemySpeedMultiplier => GetEnemySpeedMultiplier(Level);
+    public float EnemySpeedMultiplier = 2.5f;
     public (float,float) EnemySpawnIntervalRange => GetEnemySpawnIntervalRange(Level);
     [SerializeField] private List<MyKeyValuePair<int, GameObject>> enemyPrefabs;
     [SerializeField] private List<GameObject> enemySpawnPoints;
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     [Space(10)]
     [SerializeField] private GameObject UpgradeUI;
+    [SerializeField] private RectTransform upgradeBoxL;
+    [SerializeField] private RectTransform upgradeBoxR;
     [SerializeField] private TMPro.TMP_Text upgradeDescriptionTextL;
     [SerializeField] private TMPro.TMP_Text upgradeDescriptionTextR;
     [SerializeField] private RerollButton rerollButton;
@@ -107,18 +111,19 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            float waitTime = Random.Range(EnemySpawnIntervalRange.Item1, EnemySpawnIntervalRange.Item2);
+            float waitTime = UnityEngine.Random.Range(EnemySpawnIntervalRange.Item1, EnemySpawnIntervalRange.Item2);
             yield return new WaitForSeconds(waitTime);
 
-            int randomIndex = Random.Range(0, enemyPool.Count);
+            int randomIndex = UnityEngine.Random.Range(0, enemyPool.Count);
             GameObject enemyPrefab = enemyPool[randomIndex];
-            Vector3 spawnPosition = enemySpawnPoints[Random.Range(0, enemySpawnPoints.Count)].transform.position;
+            Vector3 spawnPosition = enemySpawnPoints[UnityEngine.Random.Range(0, enemySpawnPoints.Count)].transform.position;
             Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         }
     }
 
     public void ShowUpgradeOptions()
     {
+        Debug.Log("Showing upgrade options");
         int leftUpgradeIdx = -1;
         if (Player.Instance.Health < Player.Instance.MaxHealth && canReroll)
         {
@@ -127,7 +132,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            leftUpgradeIdx = Random.Range(1, availableUpgrades.Count);
+            leftUpgradeIdx = UnityEngine.Random.Range(1, availableUpgrades.Count);
         }
         LeftUpgrade = availableUpgrades[leftUpgradeIdx];
         upgradeDescriptionTextL.text = LeftUpgrade.Description;
@@ -136,7 +141,7 @@ public class GameManager : MonoBehaviour
         availableUpgrades.RemoveAt(leftUpgradeIdx);
 
         int rightMinIdx = Player.Instance.Health < Player.Instance.MaxHealth ? 0 : 1;
-        RightUpgrade = availableUpgrades[Random.Range(rightMinIdx, availableUpgrades.Count)];
+        RightUpgrade = availableUpgrades[UnityEngine.Random.Range(rightMinIdx, availableUpgrades.Count)];
         upgradeDescriptionTextR.text = RightUpgrade.Description;
 
         // restore the removed upgrade back to the pool
@@ -146,13 +151,20 @@ public class GameManager : MonoBehaviour
         CombatOnlyUI.SetActive(false);
         UpgradeUI.SetActive(true);
         Time.timeScale = 0f;
-        StartCoroutine(UpgradeMenuDelay());
-    }
 
-    private IEnumerator UpgradeMenuDelay()
-    {
-        yield return new WaitForSecondsRealtime(0.5f);
-        CurrentState = GameState.Upgrade;
+        float targetY = -25f;
+
+        StartCoroutine(Tweens.InterpolateRealTime(
+            null,
+            (t) =>
+            {
+                float newY = Tweens.EaseOutBack(targetY - 150f, targetY, t);
+                upgradeBoxL.anchoredPosition = new Vector2(upgradeBoxL.anchoredPosition.x, newY);
+                upgradeBoxR.anchoredPosition = new Vector2(upgradeBoxR.anchoredPosition.x, newY);
+            },
+            () => { CurrentState = GameState.Upgrade; },
+            0.5f
+        ));
     }
 
     private void MenuButtonLeft(InputController controller)
@@ -181,7 +193,20 @@ public class GameManager : MonoBehaviour
 
         canReroll = false;
         rerollButton.ToggleEnabled(false);
-        ShowUpgradeOptions();
+
+        float startY = -25f;
+
+        StartCoroutine(Tweens.InterpolateRealTime(
+            null,
+            (t) =>
+            {
+                float newY = Tweens.EaseInBack(startY, startY - 150f, t);
+                upgradeBoxL.anchoredPosition = new Vector2(upgradeBoxL.anchoredPosition.x, newY);
+                upgradeBoxR.anchoredPosition = new Vector2(upgradeBoxR.anchoredPosition.x, newY);
+            },
+            () => { Debug.Log("Finishing tween"); ShowUpgradeOptions(); },
+            0.3f
+        ));
     }
 
     public void HandleSelectUpgrade(Upgrade selectedUpgrade)
@@ -209,11 +234,11 @@ public class GameManager : MonoBehaviour
     }
 
     private int GetExpForLevel(int level) { return level * 5; }
-    private float GetEnemySpeedMultiplier(int level) { return 2 + level * 0.15f; }
+    // private float GetEnemySpeedMultiplier(int level) { return 2 + level * 0.15f; }
     private (float, float) GetEnemySpawnIntervalRange(int level)
     {
-        float min = Mathf.Max(0.1f, 1.5f - level % 10 * 0.15f);
-        float max = Mathf.Max(0.2f, 3.0f - level % 10 * 0.3f);
+        float min = 2f * Mathf.Exp(level / 4f * -1f);
+        float max = 4f * Mathf.Exp(level / 4f * -1f);
         return (min, max);
     }
 }

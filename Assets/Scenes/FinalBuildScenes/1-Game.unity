@@ -433,13 +433,15 @@ MonoBehaviour:
   - Key: 5
     Value: {fileID: 8365804524081345917, guid: c0f1c666d1cd36041abb8e65ceebf1be, type: 3}
   - Key: 10
-    Value: {fileID: 8365804524081345917, guid: 892107ce8c9e30945a385250efb16195, type: 3}
+    Value: {fileID: 8365804524081345917, guid: 9332d18e41b1d6e4b9258358561d32af, type: 3}
   enemySpawnPoints:
   - {fileID: 857280804}
   - {fileID: 1160800917}
   startingWeapon: {fileID: 11400000, guid: 4c0d883fd8d6e864f94358f80ea676ae, type: 2}
   levelText: {fileID: 492083391}
   UpgradeUI: {fileID: 2014255276}
+  upgradeBoxL: {fileID: 24950041}
+  upgradeBoxR: {fileID: 760018821}
   upgradeDescriptionTextL: {fileID: 1927333185}
   upgradeDescriptionTextR: {fileID: 1908164706}
   rerollButton: {fileID: 1661443974}
@@ -3959,11 +3961,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4702334}
-  - {fileID: 2014255277}
   - {fileID: 1341847899}
   - {fileID: 1608651010}
   - {fileID: 293238601}
   - {fileID: 1605137219}
+  - {fileID: 2014255277}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
