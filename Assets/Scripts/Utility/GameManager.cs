@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +18,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public GameState CurrentState { get; private set; } = GameState.Combat;
     public bool DebugDoSpawnEnemies = true;
+
+    public EventReference levelUpRef;
+
+    public EventReference bgmRef;
 
     private int level;
     public int Level
@@ -69,6 +75,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject DeathUI;
     [SerializeField] private TMPro.TMP_Text deathScoreText;
 
+    [SerializeField] private EventInstance levelUpSFX;
+    [SerializeField] private EventInstance bgmInstance;
+
     private List<Upgrade> availableUpgrades = new()
     {
         new("+3 Health", Upgrade.UpgradeType.Heal),
@@ -101,6 +110,10 @@ public class GameManager : MonoBehaviour
         Player.Instance.OnStart(startingWeapon);
         enemyPool = new List<GameObject>{ enemyPrefabs[0].Value };
         enemyPrefabs.RemoveAt(0);
+
+        levelUpSFX = RuntimeManager.CreateInstance(levelUpRef);
+        bgmInstance = RuntimeManager.CreateInstance(bgmRef);
+        bgmInstance.start();
 
         #if UNITY_EDITOR
             if (DebugDoSpawnEnemies) spawnCoroutine = StartCoroutine(SpawnCoroutine());
@@ -226,6 +239,7 @@ public class GameManager : MonoBehaviour
 
     public void HandleSelectUpgrade(Upgrade selectedUpgrade)
     {
+
         selectedUpgrade?.ApplyEffect();
         UpgradesToGain--;
 
@@ -237,6 +251,9 @@ public class GameManager : MonoBehaviour
         {
             Level++;
             levelText.text = $"Level {Level}";
+
+            levelUpSFX.start();
+
             Player.Instance.PlayerLevelUp();
             UpgradeUI.SetActive(false);
             canReroll = true;
@@ -294,8 +311,11 @@ public class GameManager : MonoBehaviour
         CombatOnlyUI.SetActive(false);
         UpgradeUI.SetActive(false);
         DeathUI.SetActive(true);
+        
         deathScoreText.text = $"Final Score: {CalcFinalScore()}";
         CurrentState = GameState.DeathScreen;
+
+        bgmInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     private int CalcFinalScore()

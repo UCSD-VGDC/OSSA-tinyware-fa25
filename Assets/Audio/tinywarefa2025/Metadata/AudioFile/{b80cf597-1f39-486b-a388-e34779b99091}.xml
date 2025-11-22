@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{b80cf597-1f39-486b-a388-e34779b99091}">
+		<property name="assetPath">
+			<value>Survive.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>79.799999999999997</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6766642b-e64e-4136-bda9-77f85d60575d}</destination>
+		</relationship>
+	</object>
+</objects>

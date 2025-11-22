@@ -1,4 +1,6 @@
 using System.Collections;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +12,8 @@ public class Player : MonoBehaviour, IDamageable
     public float MaxHealth { get; private set; } = 5f;
     public float RandomHealChance { get; private set; } = 0f;
     public float RandomAmmoChance { get; private set; } = 0f;
+
+    public EventReference pewpewSFXref;
     [SerializeField] private GameObject visuals;
     public GameObject ProjectileSpawnPoint;
     private Animator animator;
@@ -22,6 +26,8 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private GameObject ammoSegmentPrefab;
     [SerializeField] private Image expBar;
     [SerializeField] private Image cooldownOverlay;
+
+    [SerializeField] private EventInstance pewpewSFXinstance;
 
     private float health;
     public float Health
@@ -66,6 +72,9 @@ public class Player : MonoBehaviour, IDamageable
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        pewpewSFXinstance = RuntimeManager.CreateInstance(pewpewSFXref);
+
     }
 
     public void OnStart(Weapon startingWeapon)
@@ -104,6 +113,7 @@ public class Player : MonoBehaviour, IDamageable
         if (!GameManager.Instance.CurrentState.Equals(GameManager.GameState.Combat) || !canAttack || Ammo <= 0)
         {
             // TODO: play no ammo sfx
+            pewpewSFXinstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             return;
         }
 
@@ -117,6 +127,7 @@ public class Player : MonoBehaviour, IDamageable
         if (!GameManager.Instance.CurrentState.Equals(GameManager.GameState.Combat) || !canAttack || Ammo <= 0)
         {
             // TODO: play no ammo sfx
+            pewpewSFXinstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             return;
         }
 
@@ -129,6 +140,7 @@ public class Player : MonoBehaviour, IDamageable
         Ammo--;
         animator.SetTrigger("shoot");
         // TODO: play attack sfx
+        pewpewSFXinstance.start();
         StartCoroutine(AttackCooldown());
     }
 

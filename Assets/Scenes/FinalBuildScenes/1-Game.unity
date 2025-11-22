@@ -174,6 +174,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugDoSpawnEnemies: 1
+  levelUpRef:
+    Guid:
+      Data1: -1526957658
+      Data2: 1133810175
+      Data3: 1200726460
+      Data4: 225063739
+    Path: event:/SFX/HealingSFX
   EnemySpeedMultiplier: 2.5
   enemyPrefabs:
   - Key: 0
@@ -1129,9 +1136,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1161486093}
   - component: {fileID: 1161486092}
-  - component: {fileID: 1161486091}
   - component: {fileID: 1161486094}
   - component: {fileID: 1161486095}
+  - component: {fileID: 1161486096}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1139,14 +1146,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1161486091
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161486090}
-  m_Enabled: 1
 --- !u!20 &1161486092
 Camera:
   m_ObjectHideFlags: 0
@@ -1281,6 +1280,20 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &1161486096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161486090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &1264192822
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,6 +1533,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4cb0d8b86f5014f9d5fe12c74dcf39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pewpewSFXref:
+    Guid:
+      Data1: -1652727174
+      Data2: 1180009814
+      Data3: -1538696798
+      Data4: 358367078
+    Path: event:/SFX/PewPewSFX
   visuals: {fileID: 539916594}
   ProjectileSpawnPoint: {fileID: 246419429}
   healthBar: {fileID: 1341121552}

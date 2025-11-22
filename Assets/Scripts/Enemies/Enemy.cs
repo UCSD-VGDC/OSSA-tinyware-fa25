@@ -1,14 +1,22 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     protected const int PLAYER_LAYER = 6;
 
+    public EventReference dmgSFXRef;
+
+    public int Size = 0;
+
     public float Health = 1f;
     public float Damage = 1f;
     public float MoveSpeed = 1f;
     public int ExperienceReward = 1;
     [SerializeField] protected GameObject visuals;
+
+    [SerializeField] private EventInstance eventInstance;
 
     protected float liveMoveSpeed;
     protected Rigidbody2D rb;
@@ -24,6 +32,8 @@ public class Enemy : MonoBehaviour, IDamageable
         rb.linearVelocity = new Vector2(liveMoveSpeed * moveDirection, 0);
         animator = GetComponent<Animator>();
         animator.SetFloat("speed", GameManager.Instance.EnemySpeedMultiplier - 1.15f);
+        eventInstance = RuntimeManager.CreateInstance(dmgSFXRef);
+        eventInstance.setParameterByName("Size", Size);
     }
 
     public virtual void TakeDamage(float damageAmount)
@@ -42,6 +52,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (other.gameObject.layer == PLAYER_LAYER)
         {
+            eventInstance.start();
             Player.Instance.TakeDamage(Damage);
             Destroy(gameObject);
         }
