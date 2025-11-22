@@ -2,21 +2,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    private const int PLAYER_LAYER = 6;
+    protected const int PLAYER_LAYER = 6;
 
     public float Health = 1f;
     public float Damage = 1f;
     public float MoveSpeed = 1f;
     public int ExperienceReward = 1;
-    [SerializeField] private GameObject visuals;
+    [SerializeField] protected GameObject visuals;
 
-    private float liveMoveSpeed;
-    private Rigidbody2D rb;
-    private int moveDirection;
-    private Animator animator;
+    protected float liveMoveSpeed;
+    protected Rigidbody2D rb;
+    protected int moveDirection;
+    protected Animator animator;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         liveMoveSpeed = MoveSpeed * GameManager.Instance.EnemySpeedMultiplier;
@@ -27,7 +26,7 @@ public class Enemy : MonoBehaviour, IDamageable
         animator.SetFloat("speed", GameManager.Instance.EnemySpeedMultiplier - 1.15f);
     }
 
-    public void TakeDamage(float damageAmount)
+    public virtual void TakeDamage(float damageAmount)
     {
         Health -= damageAmount;
         if (Health <= 0)
@@ -39,7 +38,7 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == PLAYER_LAYER)
         {
