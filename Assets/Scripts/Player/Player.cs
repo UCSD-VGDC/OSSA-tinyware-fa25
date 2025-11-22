@@ -190,7 +190,8 @@ public class Player : MonoBehaviour, IDamageable
         currentWeapon.MaxAmmo += amount;
         for (int i = 0; i < amount; i++)
         {
-            Instantiate(ammoSegmentPrefab, ammoSegmentContainer.transform);
+            GameObject segment = Instantiate(ammoSegmentPrefab, ammoSegmentContainer.transform);
+            segment.transform.SetAsFirstSibling();
         }
     }
     public void DecreaseAmmoRegenTime(float multiplier) { currentWeapon.AmmoRegenTime *= multiplier; }

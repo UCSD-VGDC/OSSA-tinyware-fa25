@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> enemySpawnPoints;
     private List<GameObject> enemyPool = new();
     [SerializeField] private Weapon startingWeapon;
+    [SerializeField] private TMPro.TMP_Text levelText;
 
     [Space(10)]
     [SerializeField] private GameObject UpgradeUI;
@@ -149,6 +150,7 @@ public class GameManager : MonoBehaviour
     {
         selectedUpgrade?.ApplyEffect();
         Level++;
+        levelText.text = $"Level {Level}";
         Player.Instance.PlayerLevelUp();
         canReroll = true;
         UpgradeUI.SetActive(false);
