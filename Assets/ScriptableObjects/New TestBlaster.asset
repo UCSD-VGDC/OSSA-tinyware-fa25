@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f425c1327f1b49544ac5d61dec7e7cbc, type: 3}
   m_Name: New TestBlaster
   m_EditorClassIdentifier: 
-  projectileSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  projectilePrefab: {fileID: 3157742190695240445, guid: 217739fc85eb2594292e809a5801346e, type: 3}
   Damage: 1
   MaxAmmo: 5
+  AmmoRegenTime: 1.5
   Cooldown: 0.5
-  ProjectileSpeed: 1
+  ProjectileSpeed: 10
+  ProjectileHits: 1

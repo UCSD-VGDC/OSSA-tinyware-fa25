@@ -2,25 +2,49 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
+    private const int PLAYER_LAYER = 6;
+
     public float Health = 1f;
     public float Damage = 1f;
     public float MoveSpeed = 1f;
-    
+    public int ExperienceReward = 1;
+    [SerializeField] private GameObject visuals;
+
+    private float liveMoveSpeed;
+    private Rigidbody2D rb;
+    private int moveDirection;
+    private Animator animator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, Vector3.zero, MoveSpeed * Time.deltaTime);
+        rb = GetComponent<Rigidbody2D>();
+        liveMoveSpeed = MoveSpeed * GameManager.Instance.EnemySpeedMultiplier;
+        moveDirection = (transform.position.x > 0) ? -1 : 1;
+        visuals.transform.localScale = new Vector3(moveDirection, 1, 1);
+        rb.linearVelocity = new Vector2(liveMoveSpeed * moveDirection, 0);
+        animator = GetComponent<Animator>();
+        animator.SetFloat("speed", GameManager.Instance.EnemySpeedMultiplier - 1.15f);
     }
 
     public void TakeDamage(float damageAmount)
     {
         Health -= damageAmount;
-        if (Health < 0) Health = 0;
+        if (Health <= 0)
+        {
+            // Enemy defeated
+            Player.Instance.GainExperience(ExperienceReward);
+            Player.Instance.TryApplyRandomUpgrades();
+            Destroy(gameObject);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == PLAYER_LAYER)
+        {
+            Player.Instance.TakeDamage(Damage);
+            Destroy(gameObject);
+        }
     }
 }

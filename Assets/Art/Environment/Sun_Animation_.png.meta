@@ -1,0 +1,242 @@
+fileFormatVersion: 2
+guid: 8da3f9c7d333c5046a708bbd7253ace1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 138672573908271632
+    second: Sun_Animation__0
+  - first:
+      213: 4654449063918394256
+    second: Sun_Animation__1
+  - first:
+      213: -8371874037211082985
+    second: Sun_Animation__2
+  - first:
+      213: -2791118761675428722
+    second: Sun_Animation__3
+  - first:
+      213: -9137077326780935626
+    second: Sun_Animation__4
+  - first:
+      213: -3861818854594593207
+    second: Sun_Animation__5
+  - first:
+      213: -8648892413718819996
+    second: Sun_Animation__6
+  - first:
+      213: -8526697440164546208
+    second: Sun_Animation__7
+  - first:
+      213: -8196814442885373653
+    second: Sun_Animation__8
+  - first:
+      213: 4249665371001832705
+    second: Sun_Animation__9
+  - first:
+      213: -4943393592834713295
+    second: Sun_Animation__10
+  - first:
+      213: 3886470131494928926
+    second: Sun_Animation__11
+  - first:
+      213: 908146693804807758
+    second: Sun_Animation__12
+  - first:
+      213: -4867804874841436276
+    second: Sun_Animation__13
+  - first:
+      213: 873052291303524877
+    second: Sun_Animation__14
+  - first:
+      213: -1863704094071505058
+    second: Sun_Animation__15
+  - first:
+      213: -8991130611505303049
+    second: Sun_Animation__16
+  - first:
+      213: 1647541662275267814
+    second: Sun_Animation__17
+  - first:
+      213: -210594423644299650
+    second: Sun_Animation__18
+  - first:
+      213: -5126759451489582581
+    second: Sun_Animation__19
+  - first:
+      213: 7546161150041585379
+    second: Sun_Animation__20
+  - first:
+      213: -5456368016119877142
+    second: Sun_Animation__21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Sun_Animation__0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 348
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01244e3a8f9ace100800000000000000
+      internalID: 138672573908271632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sun_Animation__1
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 0
+        width: 348
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09b510863cce79040800000000000000
+      internalID: 4654449063918394256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 921aca0b4cfa6074fb9a7633aaa1ed1a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Sun_Animation__0: 138672573908271632
+      Sun_Animation__1: 4654449063918394256
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
