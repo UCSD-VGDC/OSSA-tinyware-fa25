@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     [Space(10)]
     [SerializeField] private GameObject DeathUI;
+    [SerializeField] private TMPro.TMP_Text deathScoreText;
 
     private List<Upgrade> availableUpgrades = new()
     {
@@ -230,10 +231,22 @@ public class GameManager : MonoBehaviour
         CombatOnlyUI.SetActive(false);
         UpgradeUI.SetActive(false);
         DeathUI.SetActive(true);
+        deathScoreText.text = $"Final Score: {CalcFinalScore()}";
         CurrentState = GameState.DeathScreen;
     }
 
-    private int GetExpForLevel(int level) { return level * 5; }
+    private int CalcFinalScore()
+    {
+        int score = 0;
+        for (int i = 1; i < Level; i++)
+        {
+            score += GetExpForLevel(i);
+        }
+        score += Player.Instance.Experience;
+        return score;
+    }
+
+    private int GetExpForLevel(int level) { return Mathf.FloorToInt(4f * level * level / 5f + 5); }
     // private float GetEnemySpeedMultiplier(int level) { return 2 + level * 0.15f; }
     private (float, float) GetEnemySpawnIntervalRange(int level)
     {

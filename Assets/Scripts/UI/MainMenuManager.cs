@@ -35,9 +35,16 @@ public class MainMenuManager : MonoBehaviour
 
     private void MenuButtonLeft(InputController controller)
     {
-        CurrentState = CurrentState == MenuState.Main ? MenuState.Credits : MenuState.Main;
-        titleScreenUI.SetActive(CurrentState == MenuState.Main);
-        creditsUI.SetActive(CurrentState == MenuState.Credits);
+        if (CurrentState == MenuState.Main)
+        {
+            // Switch to Credits
+            CurrentState = MenuState.Credits;
+        }
+        else
+        {
+            // Switch to Main
+            CurrentState = MenuState.Main;
+        }
     }
 
     private void MenuButtonRight(InputController controller)
