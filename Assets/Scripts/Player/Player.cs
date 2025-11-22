@@ -123,6 +123,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         Health -= damageAmount;
         if (Health < 0) Health = 0;
+        Debug.Log($"Player took damage: {damageAmount}, Current Health: {Health}");
         healthBar.fillAmount = Health / maxHealth;
     }
 
@@ -137,19 +138,6 @@ public class Player : MonoBehaviour, IDamageable
             Experience = 0;
 
             // TODO: give upgrade prompts
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == ENEMY_LAYER)
-        {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                TakeDamage(enemy.Damage);
-                Destroy(other.gameObject);
-            }
         }
     }
 }

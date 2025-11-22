@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 858910984991777636}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0785, y: 0, z: 0}
+  m_LocalPosition: {x: -0.37, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59,8 +59,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 9182020907575922131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
@@ -109,7 +109,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 1623661553487409599}
   - component: {fileID: 2930554204301928514}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: Enemy 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,10 +166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69bbf7e71fccf2b4690271d2d91a830f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 1
-  Damage: 1
-  MoveSpeed: 2
-  ExperienceReward: 1
+  Health: 3
+  Damage: 3
+  MoveSpeed: 1.5
+  ExperienceReward: 3
   visuals: {fileID: 858910984991777636}
 --- !u!61 &1623661553487409599
 BoxCollider2D:
