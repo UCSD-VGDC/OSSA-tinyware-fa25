@@ -356,6 +356,8 @@ MonoBehaviour:
   - Key: 0
     Value: {fileID: 8365804524081345917, guid: bd49d77f21dfd9547a5b3daa7eaea454, type: 3}
   - Key: 5
+    Value: {fileID: 8365804524081345917, guid: c0f1c666d1cd36041abb8e65ceebf1be, type: 3}
+  - Key: 10
     Value: {fileID: 8365804524081345917, guid: 892107ce8c9e30945a385250efb16195, type: 3}
   enemySpawnPoints:
   - {fileID: 857280804}

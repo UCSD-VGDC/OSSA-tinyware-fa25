@@ -91,7 +91,7 @@ public class Player : MonoBehaviour, IDamageable
         // TODO: REMOVE DEBUG
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            GainExperience(1);
+            GainExperience(GameManager.Instance.ExpNeeded);
         }
     }
 
