@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,19 +15,24 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private GameObject titleScreenUI;
     [SerializeField] private GameObject creditsUI;
     [SerializeField] private Image blackOverlay;
+    [SerializeField] private Image logoImage;
+    [SerializeField] private List<RectTransform> buttons;
+    [SerializeField] private List<RectTransform> labels;
     private MenuState CurrentState = MenuState.NoInput;
 
     private void Start()
     {
-        StartCoroutine(Tweens.InterpolateRealTime(
+        titleScreenUI.SetActive(true);
+        creditsUI.SetActive(false);
+        StartCoroutine(Tweens.Interpolate(
             null,
             (t) =>
             {
                 float newAlpha = Tweens.EaseInOutCubic(1f, 0f, t);
                 blackOverlay.color = new Color(0, 0, 0, newAlpha);
             },
-            () => { ShowTitleScreen(); },
-            1f
+            () => { StartCoroutine(ShowTitleScreenCoroutine()); },
+            2.5f
         ));
     }
 
@@ -46,43 +53,54 @@ public class MainMenuManager : MonoBehaviour
     private void MenuButtonLeft(InputController controller)
     {
         if (CurrentState == MenuState.Main) ShowCreditsScreen();
-        else ShowTitleScreen();
+        else ShowMainMenuScreen();
     }
 
-    private void ShowTitleScreen()
+    private IEnumerator ShowTitleScreenCoroutine()
     {
         CurrentState = MenuState.NoInput;
+        creditsUI.SetActive(false);
         titleScreenUI.SetActive(true);
+
+        StartCoroutine(Tweens.Interpolate(
+            null,
+            (t) =>
+            {
+                float newAlpha = Tweens.EaseInOutCubic(0f, 1f, t);
+                logoImage.color = new Color(1, 1, 1, newAlpha);
+            },
+            null,
+            2.5f
+        ));
+
+        yield return new WaitForSeconds(3f);
+        float targetY = -70f;
+
         StartCoroutine(Tweens.InterpolateRealTime(
             null,
             (t) =>
             {
-                // float newY = Tweens.EaseOutBack(targetY - 150f, targetY, t);
-                // upgradeBoxL.anchoredPosition = new Vector2(upgradeBoxL.anchoredPosition.x, newY);
-                // upgradeBoxR.anchoredPosition = new Vector2(upgradeBoxR.anchoredPosition.x, newY);
+                float newY = Tweens.EaseOutQuart(targetY - 150f, targetY, t);
+                foreach (var button in buttons) button.anchoredPosition = new Vector2(button.anchoredPosition.x, newY);
+                foreach (var label in labels) label.anchoredPosition = new Vector2(label.anchoredPosition.x, newY + 45f);
             },
             () => { CurrentState = MenuState.Main; },
-            0.5f
+            2.5f
         ));
+    }
+
+    private void ShowMainMenuScreen()
+    {
+        titleScreenUI.SetActive(true);
         creditsUI.SetActive(false);
+        CurrentState = MenuState.Main;
     }
 
     private void ShowCreditsScreen()
     {
-        CurrentState = MenuState.Credits;
-        creditsUI.SetActive(true);
-        StartCoroutine(Tweens.InterpolateRealTime(
-            null,
-            (t) =>
-            {
-                // float newY = Tweens.EaseInBack(targetY, targetY - 150f, t);
-                // upgradeBoxL.anchoredPosition = new Vector2(upgradeBoxL.anchoredPosition.x, newY);
-                // upgradeBoxR.anchoredPosition = new Vector2(upgradeBoxR.anchoredPosition.x, newY);
-            },
-            () => { CurrentState = MenuState.Credits; },
-            0.5f
-        ));
         titleScreenUI.SetActive(false);
+        creditsUI.SetActive(true);
+        CurrentState = MenuState.Credits;
     }
 
     private void MenuButtonRight(InputController controller)
