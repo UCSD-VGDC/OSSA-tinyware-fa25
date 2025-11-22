@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
     public GameState CurrentState { get; private set; } = GameState.Combat;
+    public bool DebugDoSpawnEnemies = true;
 
     private int level;
     public int Level
@@ -39,8 +40,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<MyKeyValuePair<int, GameObject>> enemyPrefabs;
     [SerializeField] private List<GameObject> enemySpawnPoints;
     private List<GameObject> enemyPool = new();
+    [SerializeField] private GameObject bossPrefab;
     [SerializeField] private Weapon startingWeapon;
     [SerializeField] private TMPro.TMP_Text levelText;
+    private Coroutine spawnCoroutine;
+
+    [Space(10)]
+    [SerializeField] private GameObject expBar;
+    [SerializeField] private GameObject bossHealthBar;
+    [SerializeField] private Image bossHealthFillImage;
 
     [Space(10)]
     [SerializeField] private GameObject UpgradeUI;
@@ -49,6 +57,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text upgradeDescriptionTextL;
     [SerializeField] private TMPro.TMP_Text upgradeDescriptionTextR;
     [SerializeField] private RerollButton rerollButton;
+    public int UpgradesToGain { get; set; } = 0;
     private Upgrade LeftUpgrade;
     private Upgrade RightUpgrade;
     private bool canReroll = true;
@@ -85,13 +94,19 @@ public class GameManager : MonoBehaviour
         CombatOnlyUI.SetActive(true);
         UpgradeUI.SetActive(false);
         DeathUI.SetActive(false);
+        bossHealthBar.SetActive(false);
+        expBar.SetActive(true);
         CurrentState = GameState.Combat;
         Level = 1;
         Player.Instance.OnStart(startingWeapon);
         enemyPool = new List<GameObject>{ enemyPrefabs[0].Value };
         enemyPrefabs.RemoveAt(0);
 
-        StartCoroutine(SpawnCoroutine());
+        #if UNITY_EDITOR
+            if (DebugDoSpawnEnemies) spawnCoroutine = StartCoroutine(SpawnCoroutine());
+        #else
+            spawnCoroutine = StartCoroutine(SpawnCoroutine());
+        #endif
     }
     
     private void OnEnable()
@@ -124,7 +139,6 @@ public class GameManager : MonoBehaviour
 
     public void ShowUpgradeOptions()
     {
-        Debug.Log("Showing upgrade options");
         int leftUpgradeIdx = -1;
         if (Player.Instance.Health < Player.Instance.MaxHealth && canReroll)
         {
@@ -213,15 +227,64 @@ public class GameManager : MonoBehaviour
     public void HandleSelectUpgrade(Upgrade selectedUpgrade)
     {
         selectedUpgrade?.ApplyEffect();
-        Level++;
-        levelText.text = $"Level {Level}";
-        Player.Instance.PlayerLevelUp();
-        UpgradeUI.SetActive(false);
-        canReroll = true;
-        rerollButton.ToggleEnabled(true);
-        CombatOnlyUI.SetActive(true);
-        CurrentState = GameState.Combat;
-        Time.timeScale = 1f;
+        UpgradesToGain--;
+
+        if (UpgradesToGain > 0)
+        {
+            ShowUpgradeOptions();
+        }
+        else
+        {
+            Level++;
+            levelText.text = $"Level {Level}";
+            Player.Instance.PlayerLevelUp();
+            UpgradeUI.SetActive(false);
+            canReroll = true;
+            rerollButton.ToggleEnabled(true);
+            CombatOnlyUI.SetActive(true);
+            CurrentState = GameState.Combat;
+            Time.timeScale = 1f;
+
+            if (Level % 5 == 0)
+            {
+                StartCoroutine(StartBossLevelCoroutine());
+            }
+            else if (spawnCoroutine == null)
+            {
+                // first level after boss level, resume enemy spawning
+                spawnCoroutine = StartCoroutine(SpawnCoroutine());
+                bossHealthBar.SetActive(false);
+                expBar.SetActive(true);
+            }
+        }
+    }
+
+    private IEnumerator StartBossLevelCoroutine()
+    {
+        // Stop spawning regular enemies
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
+        }
+
+        expBar.SetActive(false);
+        bossHealthBar.SetActive(true);
+        float elapsed = 0f;
+        while (elapsed < 5f)
+        {
+            elapsed += Time.deltaTime;
+            bossHealthFillImage.fillAmount = elapsed / 5f;
+            yield return null;
+        }
+
+        // Spawn boss
+        Instantiate(bossPrefab, Vector3.zero, Quaternion.identity);
+    }
+
+    public void UpdateBossHealthBar(float healthPercent)
+    {
+        bossHealthFillImage.fillAmount = healthPercent;
     }
 
     public void HandlePlayerDeath()
@@ -240,7 +303,8 @@ public class GameManager : MonoBehaviour
         int score = 0;
         for (int i = 1; i < Level; i++)
         {
-            score += GetExpForLevel(i);
+            if (i % 5 == 0) score += GetExpForLevel(i) * 2;
+            else score += GetExpForLevel(i);
         }
         score += Player.Instance.Experience;
         return score;

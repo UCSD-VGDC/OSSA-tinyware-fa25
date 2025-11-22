@@ -189,6 +189,7 @@ public class Player : MonoBehaviour, IDamageable
         Experience += expAmount;
         if (Experience >= GameManager.Instance.ExpNeeded)
         {
+            GameManager.Instance.UpgradesToGain = 1;
             GameManager.Instance.ShowUpgradeOptions();
         }
     }
