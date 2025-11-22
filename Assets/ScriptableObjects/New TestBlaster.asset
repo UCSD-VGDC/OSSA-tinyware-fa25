@@ -17,5 +17,5 @@ MonoBehaviour:
   MaxAmmo: 5
   AmmoRegenTime: 1.5
   Cooldown: 0.5
-  ProjectileSpeed: 7.5
+  ProjectileSpeed: 10
   ProjectileHits: 1

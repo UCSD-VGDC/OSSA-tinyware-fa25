@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private float liveMoveSpeed;
     private Rigidbody2D rb;
     private int moveDirection;
+    private Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,6 +23,8 @@ public class Enemy : MonoBehaviour, IDamageable
         moveDirection = (transform.position.x > 0) ? -1 : 1;
         visuals.transform.localScale = new Vector3(moveDirection, 1, 1);
         rb.linearVelocity = new Vector2(liveMoveSpeed * moveDirection, 0);
+        animator = GetComponent<Animator>();
+        animator.SetFloat("speed", GameManager.Instance.EnemySpeedMultiplier - 1f);
     }
 
     public void TakeDamage(float damageAmount)
