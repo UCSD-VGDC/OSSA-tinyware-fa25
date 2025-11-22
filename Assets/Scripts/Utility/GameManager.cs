@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text upgradeDescriptionTextR;
     private Upgrade LeftUpgrade;
     private Upgrade RightUpgrade;
+    private bool canReroll = true;
 
     private List<Upgrade> availableUpgrades = new()
     {
@@ -78,12 +79,14 @@ public class GameManager : MonoBehaviour
     {
         InputController.OnButtonLeftPressedEvent += SelectUpgradeLeft;
         InputController.OnButtonRightPressedEvent += SelectUpgradeRight;
+        InputController.OnBothButtonsPressedEvent += RerollUpgrades;
     }
 
     private void OnDisable()
     {
         InputController.OnButtonLeftPressedEvent -= SelectUpgradeLeft;
         InputController.OnButtonRightPressedEvent -= SelectUpgradeRight;
+        InputController.OnBothButtonsPressedEvent -= RerollUpgrades;
     }
 
     private IEnumerator SpawnCoroutine()
@@ -134,11 +137,20 @@ public class GameManager : MonoBehaviour
         HandleSelectUpgrade(RightUpgrade);
     }
 
+    private void RerollUpgrades(InputController controller)
+    {
+        if (!CurrentState.Equals(GameState.Upgrade) || !canReroll) return;
+
+        ShowUpgradeOptions();
+        canReroll = false;
+    }
+
     public void HandleSelectUpgrade(Upgrade selectedUpgrade)
     {
         selectedUpgrade?.ApplyEffect();
         Level++;
         Player.Instance.PlayerLevelUp();
+        canReroll = true;
         UpgradeUI.SetActive(false);
         CurrentState = GameState.Combat;
         Time.timeScale = 1f;
