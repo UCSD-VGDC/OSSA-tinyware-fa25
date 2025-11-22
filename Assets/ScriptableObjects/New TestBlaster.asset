@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: New TestBlaster
   m_EditorClassIdentifier: 
   projectileSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Damage: 1
+  MaxAmmo: 5
+  Cooldown: 0.5
+  ProjectileSpeed: 1
