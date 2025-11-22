@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     {
         Menu,
         Combat,
-        Upgrade
+        Upgrade,
+        NoInput
     }
 
     public static GameManager Instance;
@@ -47,6 +48,9 @@ public class GameManager : MonoBehaviour
     private Upgrade RightUpgrade;
     private bool canReroll = true;
 
+    [Space(10)]
+    [SerializeField] private GameObject CombatOnlyUI;
+
     private List<Upgrade> availableUpgrades = new()
     {
         new("Increase Max Health by 5", Upgrade.UpgradeType.HealthIncrease),
@@ -66,6 +70,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        CombatOnlyUI.SetActive(true);
         UpgradeUI.SetActive(false);
         CurrentState = GameState.Combat;
         Level = 1;
@@ -119,9 +124,17 @@ public class GameManager : MonoBehaviour
         // restore the removed upgrade back to the pool
         availableUpgrades.Add(LeftUpgrade);
 
-        CurrentState = GameState.Upgrade;
+        CurrentState = GameState.NoInput;
+        CombatOnlyUI.SetActive(false);
         UpgradeUI.SetActive(true);
         Time.timeScale = 0f;
+        StartCoroutine(UpgradeMenuDelay());
+    }
+
+    private IEnumerator UpgradeMenuDelay()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        CurrentState = GameState.Upgrade;
     }
 
     private void SelectUpgradeLeft(InputController controller)
@@ -154,6 +167,7 @@ public class GameManager : MonoBehaviour
         Player.Instance.PlayerLevelUp();
         canReroll = true;
         UpgradeUI.SetActive(false);
+        CombatOnlyUI.SetActive(true);
         CurrentState = GameState.Combat;
         Time.timeScale = 1f;
     }

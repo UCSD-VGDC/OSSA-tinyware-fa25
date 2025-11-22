@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] private float maxHealth = 5f;
     [SerializeField] private GameObject visuals;
+    public GameObject ProjectileSpawnPoint;
     private Animator animator;
 
     [Space(10)]
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private GameObject ammoSegmentContainer;
     [SerializeField] private GameObject ammoSegmentPrefab;
     [SerializeField] private Image expBar;
+    [SerializeField] private Image cooldownOverlay;
 
     private float health;
     public float Health
@@ -131,7 +133,15 @@ public class Player : MonoBehaviour, IDamageable
     private IEnumerator AttackCooldown()
     {
         canAttack = false;
-        yield return new WaitForSeconds(currentWeapon.Cooldown);
+        cooldownOverlay.fillAmount = 1f;
+        float elapsed = 0f;
+        while (elapsed < currentWeapon.Cooldown)
+        {
+            elapsed += Time.deltaTime;
+            cooldownOverlay.fillAmount = 1f - (elapsed / currentWeapon.Cooldown);
+            yield return null;
+        }
+        cooldownOverlay.fillAmount = 0f;
         canAttack = true;
     }
 

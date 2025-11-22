@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8c6703a0eff732848bc09d8659a90f3d
+guid: 404ca3232e21dbf47be3467b8aea2117
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5034191053701681005
-    second: Ammo_Bar_ (1)_0
+      213: 7387846437351669004
+    second: L_+_R_Button__0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ammo_Bar_ (1)_0
+      name: L_+_R_Button__0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 2
-        width: 150
-        height: 12
+        x: 0
+        y: 0
+        width: 32
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 39079a0b8e5f22ab0800000000000000
-      internalID: -5034191053701681005
+      spriteID: c0d3b793137e68660800000000000000
+      internalID: 7387846437351669004
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 16ac98632af473442a8494cb9522d5ac
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Ammo_Bar_ (1)_0: -5034191053701681005
+      L_+_R_Button__0: 7387846437351669004
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
