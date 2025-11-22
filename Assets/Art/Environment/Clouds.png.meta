@@ -1,28 +1,34 @@
 fileFormatVersion: 2
-guid: 561cfc74c0602dd4cb1a655c3d500667
+guid: 2d378bb8b78c0564f87e301c8fe4d9de
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -220793266668496034
-    second: Static clouds top layer_0
+      213: 2669142961033076756
+    second: Clouds_0
   - first:
-      213: 620390559653334275
-    second: Static clouds top layer_1
+      213: -3967920315399815954
+    second: Clouds_1
   - first:
-      213: 6351143953617209084
-    second: Static clouds top layer_2
+      213: -1749161583622989117
+    second: Clouds_2
   - first:
-      213: -7229946817970773292
-    second: Static clouds top layer_3
+      213: -5240784962635489071
+    second: Clouds_3
   - first:
-      213: -692444193045944604
-    second: Static clouds top layer_4
+      213: 1327514091082312007
+    second: Clouds_4
   - first:
-      213: 1501601302172739607
-    second: Static clouds top layer_5
+      213: 5063102313881138252
+    second: Clouds_5
   - first:
-      213: -6647288286229666979
-    second: Static clouds top layer_6
+      213: 7433681639430268716
+    second: Clouds_6
+  - first:
+      213: -8284803859559965258
+    second: Clouds_7
+  - first:
+      213: -4712777430531239470
+    second: Clouds_8
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -131,7 +137,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Static clouds top layer_0
+      name: Clouds_0
       rect:
         serializedVersion: 2
         x: 0
@@ -146,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e5b1d6b91b59fecf0800000000000000
-      internalID: -220793266668496034
+      spriteID: 4106c1f9163ba0520800000000000000
+      internalID: 2669142961033076756
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Static clouds top layer_1
+      name: Clouds_1
       rect:
         serializedVersion: 2
         x: 94
@@ -168,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 30d84225de11c9800800000000000000
-      internalID: 620390559653334275
+      spriteID: eecb98ffe7d1fe8c0800000000000000
+      internalID: -3967920315399815954
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Static clouds top layer_2
+      name: Clouds_2
       rect:
         serializedVersion: 2
         x: 145
@@ -190,19 +196,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cf649b8a6cbc32850800000000000000
-      internalID: 6351143953617209084
+      spriteID: 3ca5461aecab9b7e0800000000000000
+      internalID: -1749161583622989117
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Static clouds top layer_3
+      name: Clouds_3
       rect:
         serializedVersion: 2
         x: 267
         y: 161
-        width: 76
+        width: 100
         height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -212,14 +218,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4d2e2e9cca11aab90800000000000000
-      internalID: -7229946817970773292
+      spriteID: 1d027e5e7ddf447b0800000000000000
+      internalID: -5240784962635489071
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Static clouds top layer_4
+      name: Clouds_4
       rect:
         serializedVersion: 2
         x: 97
@@ -234,14 +240,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e6e6b6dca1f366f0800000000000000
-      internalID: -692444193045944604
+      spriteID: 749694948074c6210800000000000000
+      internalID: 1327514091082312007
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Static clouds top layer_5
+      name: Clouds_5
       rect:
         serializedVersion: 2
         x: 105
@@ -256,19 +262,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7182542bd62c6d410800000000000000
-      internalID: 1501601302172739607
+      spriteID: c44f750aab0c34640800000000000000
+      internalID: 5063102313881138252
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Static clouds top layer_6
+      name: Clouds_6
       rect:
         serializedVersion: 2
-        x: 291
-        y: 95
-        width: 57
+        x: 140
+        y: 86
+        width: 102
         height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -278,8 +284,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d536aa3c58610c3a0800000000000000
-      internalID: -6647288286229666979
+      spriteID: c27a593d01eb92760800000000000000
+      internalID: 7433681639430268716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clouds_7
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 95
+        width: 79
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd9425d8c6760d80800000000000000
+      internalID: -8284803859559965258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clouds_8
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 118
+        width: 56
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d115b375e9d89eb0800000000000000
+      internalID: -4712777430531239470
       vertices: []
       indices: 
       edges: []
@@ -298,13 +348,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Static clouds top layer_0: -220793266668496034
-      Static clouds top layer_1: 620390559653334275
-      Static clouds top layer_2: 6351143953617209084
-      Static clouds top layer_3: -7229946817970773292
-      Static clouds top layer_4: -692444193045944604
-      Static clouds top layer_5: 1501601302172739607
-      Static clouds top layer_6: -6647288286229666979
+      Clouds_0: 2669142961033076756
+      Clouds_1: -3967920315399815954
+      Clouds_2: -1749161583622989117
+      Clouds_3: -5240784962635489071
+      Clouds_4: 1327514091082312007
+      Clouds_5: 5063102313881138252
+      Clouds_6: 7433681639430268716
+      Clouds_7: -8284803859559965258
+      Clouds_8: -4712777430531239470
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
