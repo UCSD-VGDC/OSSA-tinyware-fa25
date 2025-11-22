@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour, IDamageable
 {
     public static Player Instance;
+    public const int ENEMY_LAYER = 7;
 
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private GameObject visuals;
@@ -49,7 +50,6 @@ public class Player : MonoBehaviour, IDamageable
 
     private Weapon currentWeapon;
     private bool canAttack = true;
-    public static readonly float enemyLayer = 7;
 
     private void Awake()
     {
@@ -142,8 +142,7 @@ public class Player : MonoBehaviour, IDamageable
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Player collided with " + other.gameObject.name);
-        if (other.gameObject.layer == enemyLayer)
+        if (other.gameObject.layer == ENEMY_LAYER)
         {
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
