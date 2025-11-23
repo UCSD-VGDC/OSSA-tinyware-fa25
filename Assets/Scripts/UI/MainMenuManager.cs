@@ -24,16 +24,17 @@ public class MainMenuManager : MonoBehaviour
     {
         titleScreenUI.SetActive(true);
         creditsUI.SetActive(false);
-        StartCoroutine(Tweens.Interpolate(
-            null,
-            (t) =>
-            {
-                float newAlpha = Tweens.EaseInOutCubic(1f, 0f, t);
-                blackOverlay.color = new Color(0, 0, 0, newAlpha);
-            },
-            () => { StartCoroutine(ShowTitleScreenCoroutine()); },
-            2.5f
-        ));
+        // StartCoroutine(Tweens.Interpolate(
+        //     null,
+        //     (t) =>
+        //     {
+        //         float newAlpha = Tweens.EaseInOutCubic(1f, 0f, t);
+        //         blackOverlay.color = new Color(0, 0, 0, newAlpha);
+        //     },
+        //     () => { StartCoroutine(ShowTitleScreenCoroutine()); },
+        //     2.5f
+        // ));
+        CurrentState = MenuState.Main;
     }
 
     private void OnEnable()
