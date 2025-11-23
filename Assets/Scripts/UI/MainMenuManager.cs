@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +13,11 @@ public class MainMenuManager : MonoBehaviour
         Credits,
         NoInput
     }
+
+    public EventReference bgmRef;
+    public EventReference buttonRef;
+
+    [SerializeField] private EventInstance bgmInstance;
 
     [SerializeField] private GameObject titleScreenUI;
     [SerializeField] private GameObject creditsUI;
@@ -24,6 +31,8 @@ public class MainMenuManager : MonoBehaviour
     {
         titleScreenUI.SetActive(true);
         creditsUI.SetActive(false);
+        bgmInstance = RuntimeManager.CreateInstance(bgmRef);
+
         StartCoroutine(Tweens.Interpolate(
             null,
             (t) =>
@@ -52,6 +61,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void MenuButtonLeft(InputController controller)
     {
+        RuntimeManager.PlayOneShot(buttonRef);
         if (CurrentState == MenuState.Main) ShowCreditsScreen();
         else ShowMainMenuScreen();
     }
@@ -87,6 +97,8 @@ public class MainMenuManager : MonoBehaviour
             () => { CurrentState = MenuState.Main; },
             2.5f
         ));
+
+        bgmInstance.start();
     }
 
     private void ShowMainMenuScreen()
@@ -105,6 +117,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void MenuButtonRight(InputController controller)
     {
+        
+        RuntimeManager.PlayOneShot(buttonRef);
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
@@ -114,6 +128,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void MenuButtonBoth(InputController controller)
     {
+        RuntimeManager.PlayOneShot(buttonRef);
+        bgmInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }

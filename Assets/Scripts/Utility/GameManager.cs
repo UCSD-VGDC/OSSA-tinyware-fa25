@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public EventReference bgmRef;
 
+    public EventReference buttonRef;
+
     private int level;
     public int Level
     {
@@ -197,6 +199,8 @@ public class GameManager : MonoBehaviour
 
     private void MenuButtonLeft(InputController controller)
     {
+        //put sfx here
+        RuntimeManager.PlayOneShot(buttonRef);
         if (CurrentState.Equals(GameState.Upgrade)) HandleSelectUpgrade(LeftUpgrade);
         else if (CurrentState.Equals(GameState.DeathScreen))
         {
@@ -207,6 +211,8 @@ public class GameManager : MonoBehaviour
 
     private void MenuButtonRight(InputController controller)
     {
+        //put sfx here
+        RuntimeManager.PlayOneShot(buttonRef);
         if (CurrentState.Equals(GameState.Upgrade)) HandleSelectUpgrade(RightUpgrade);
         else if (CurrentState.Equals(GameState.DeathScreen))
         {
@@ -219,6 +225,8 @@ public class GameManager : MonoBehaviour
     {
         if (!CurrentState.Equals(GameState.Upgrade) || !canReroll) return;
 
+        //put sfx here 
+        RuntimeManager.PlayOneShot(buttonRef);
         canReroll = false;
         rerollButton.ToggleEnabled(false);
 

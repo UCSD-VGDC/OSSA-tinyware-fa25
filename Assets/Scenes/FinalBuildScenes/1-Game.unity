@@ -181,6 +181,20 @@ MonoBehaviour:
       Data3: 1200726460
       Data4: 225063739
     Path: event:/SFX/HealingSFX
+  bgmRef:
+    Guid:
+      Data1: 574590094
+      Data2: 1314435574
+      Data3: -401276741
+      Data4: -1728195869
+    Path: event:/BGM/breakcoretime
+  buttonRef:
+    Guid:
+      Data1: 40555130
+      Data2: 1325228944
+      Data3: 1116604805
+      Data4: -449166289
+    Path: event:/SFX/ButtonSFX
   EnemySpeedMultiplier: 2.5
   enemyPrefabs:
   - Key: 0

@@ -1750,6 +1750,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8dd699a80bcff6499e7c5dad09a77ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgmRef:
+    Guid:
+      Data1: -1872311817
+      Data2: 1258669848
+      Data3: 1713916595
+      Data4: -1397857953
+    Path: event:/BGM/titlescreen
+  buttonRef:
+    Guid:
+      Data1: 40555130
+      Data2: 1325228944
+      Data3: 1116604805
+      Data4: -449166289
+    Path: event:/SFX/ButtonSFX
   titleScreenUI: {fileID: 359024179}
   creditsUI: {fileID: 79865909}
   blackOverlay: {fileID: 1645805151}
