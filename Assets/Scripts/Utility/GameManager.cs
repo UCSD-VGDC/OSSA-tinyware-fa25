@@ -259,8 +259,9 @@ public class GameManager : MonoBehaviour
             canReroll = true;
             rerollButton.ToggleEnabled(true);
             CombatOnlyUI.SetActive(true);
-            CurrentState = GameState.Combat;
             Time.timeScale = 1f;
+
+            StartCoroutine(ResumeCombatAfterDelay());
 
             if (Level % 5 == 0)
             {
@@ -274,6 +275,12 @@ public class GameManager : MonoBehaviour
                 expBar.SetActive(true);
             }
         }
+    }
+
+    private IEnumerator ResumeCombatAfterDelay()
+    {
+        yield return null;
+        CurrentState = GameState.Combat;
     }
 
     private IEnumerator StartBossLevelCoroutine()
@@ -316,6 +323,7 @@ public class GameManager : MonoBehaviour
         CurrentState = GameState.DeathScreen;
 
         bgmInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
     }
 
     private int CalcFinalScore()
@@ -337,5 +345,10 @@ public class GameManager : MonoBehaviour
         float min = 2f * Mathf.Exp(level / 4f * -1f);
         float max = 4f * Mathf.Exp(level / 4f * -1f);
         return (min, max);
+    }
+
+    public void SetGameState(GameState newState)
+    {
+        CurrentState = newState;
     }
 }

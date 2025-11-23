@@ -15,7 +15,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private GameObject titleScreenUI;
     [SerializeField] private GameObject creditsUI;
     [SerializeField] private Image blackOverlay;
-    [SerializeField] private Image logoImage;
+    [SerializeField] private List<TMPro.TextMeshProUGUI> logoTexts;
     [SerializeField] private List<RectTransform> buttons;
     [SerializeField] private List<RectTransform> labels;
     private MenuState CurrentState = MenuState.NoInput;
@@ -67,13 +67,13 @@ public class MainMenuManager : MonoBehaviour
             (t) =>
             {
                 float newAlpha = Tweens.EaseInOutCubic(0f, 1f, t);
-                logoImage.color = new Color(1, 1, 1, newAlpha);
+                foreach (var logoText in logoTexts) logoText.color = new Color(0.25f, 0.25f, 0.25f, newAlpha);
             },
             null,
             2.5f
         ));
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSecondsRealtime(3f);
         float targetY = -70f;
 
         StartCoroutine(Tweens.InterpolateRealTime(
@@ -82,7 +82,7 @@ public class MainMenuManager : MonoBehaviour
             {
                 float newY = Tweens.EaseOutQuart(targetY - 150f, targetY, t);
                 foreach (var button in buttons) button.anchoredPosition = new Vector2(button.anchoredPosition.x, newY);
-                foreach (var label in labels) label.anchoredPosition = new Vector2(label.anchoredPosition.x, newY + 45f);
+                foreach (var label in labels) label.anchoredPosition = new Vector2(label.anchoredPosition.x, newY + 32f);
             },
             () => { CurrentState = MenuState.Main; },
             2.5f
