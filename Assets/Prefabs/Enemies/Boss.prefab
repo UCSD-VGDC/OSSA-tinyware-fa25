@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 5
-  Damage: 2
+  Damage: 1
   MoveSpeed: 1.5
   ExperienceReward: 0
   visuals: {fileID: 24772816479873076}

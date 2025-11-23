@@ -40,6 +40,7 @@ public class Boss : Enemy
             if (phasesRemaining > 0)
             {
                 Health = phaseMaxHealth;
+                GameManager.Instance.UpdateBossHealthBar(((phasesRemaining - 1) * phaseMaxHealth + Health) / (3 * phaseMaxHealth));
                 Retreat();
             }
             else

@@ -242,8 +242,9 @@ public class GameManager : MonoBehaviour
             canReroll = true;
             rerollButton.ToggleEnabled(true);
             CombatOnlyUI.SetActive(true);
-            CurrentState = GameState.Combat;
             Time.timeScale = 1f;
+
+            StartCoroutine(ResumeCombatAfterDelay());
 
             if (Level % 5 == 0)
             {
@@ -257,6 +258,12 @@ public class GameManager : MonoBehaviour
                 expBar.SetActive(true);
             }
         }
+    }
+
+    private IEnumerator ResumeCombatAfterDelay()
+    {
+        yield return null;
+        CurrentState = GameState.Combat;
     }
 
     private IEnumerator StartBossLevelCoroutine()
@@ -293,9 +300,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         CombatOnlyUI.SetActive(false);
         UpgradeUI.SetActive(false);
-        DeathUI.SetActive(true);
         deathScoreText.text = $"Final Score: {CalcFinalScore()}";
-        CurrentState = GameState.DeathScreen;
+        DeathUI.SetActive(true);
     }
 
     private int CalcFinalScore()
@@ -317,5 +323,10 @@ public class GameManager : MonoBehaviour
         float min = 2f * Mathf.Exp(level / 4f * -1f);
         float max = 4f * Mathf.Exp(level / 4f * -1f);
         return (min, max);
+    }
+
+    public void SetGameState(GameState newState)
+    {
+        CurrentState = newState;
     }
 }
