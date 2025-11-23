@@ -41,6 +41,8 @@ public class MainMenuManager : MonoBehaviour
         //     () => { StartCoroutine(ShowTitleScreenCoroutine()); },
         //     2.5f
         // ));
+        bgmInstance = RuntimeManager.CreateInstance(bgmRef);
+        bgmInstance.start();
         CurrentState = MenuState.Main;
     }
 
@@ -97,7 +99,7 @@ public class MainMenuManager : MonoBehaviour
             2.5f
         ));
 
-        bgmInstance.start();
+        //bgmInstance.start();
     }
 
     private void ShowMainMenuScreen()
