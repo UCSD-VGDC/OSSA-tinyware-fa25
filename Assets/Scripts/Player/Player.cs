@@ -97,15 +97,6 @@ public class Player : MonoBehaviour, IDamageable
         InputController.OnButtonRightPressedEvent -= AttackRight;
     }
 
-    private void Update()
-    {
-        // TODO: REMOVE DEBUG
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            GainExperience(GameManager.Instance.ExpNeeded);
-        }
-    }
-
     private void AttackLeft(InputController controller)
     {
         visuals.transform.localScale = new Vector3(-1, 1, 1);
