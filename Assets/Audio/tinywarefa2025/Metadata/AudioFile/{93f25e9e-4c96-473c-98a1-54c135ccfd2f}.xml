@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{93f25e9e-4c96-473c-98a1-54c135ccfd2f}">
+		<property name="assetPath">
+			<value>Survive_RoughMix.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>139.80000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6766642b-e64e-4136-bda9-77f85d60575d}</destination>
+		</relationship>
+	</object>
+</objects>
