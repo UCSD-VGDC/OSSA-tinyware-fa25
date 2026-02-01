@@ -39,8 +39,30 @@
                 },
                 {
                     "name": "",
+                    "id": "fa7031e5-2f1e-405c-841a-ecaa00307080",
+                    "path": "<HID::Toodles 2008 Cthulhu Multiconsole Ezition>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ButtonL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bd0d0dc6-15c7-47b0-af9f-3ceb3a45c4c4",
                     "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ButtonR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "87e3c69e-146f-4011-a19e-0f5f65b53682",
+                    "path": "<HID::Toodles 2008 Cthulhu Multiconsole Ezition>/button3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
