@@ -80,6 +80,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d563f69cc66a8d4e9f2142b7c23f951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dmgSFXRef:
+    Guid:
+      Data1: 932934228
+      Data2: 1180742463
+      Data3: 1499770249
+      Data4: -1856950343
+    Path: event:/SFX/DmgSFX
+  Size: 0
   Health: 5
   Damage: 1
   MoveSpeed: 1.5
