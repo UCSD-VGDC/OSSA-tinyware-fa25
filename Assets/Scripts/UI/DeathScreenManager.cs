@@ -9,6 +9,7 @@ public class DeathScreenManager : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI scoreText;
     [SerializeField] private Image skullImage;
     [SerializeField] private List<TMPro.TextMeshProUGUI> labels;
+    [SerializeField] private GameObject inputs;
 
     void OnEnable()
     {
@@ -21,6 +22,7 @@ public class DeathScreenManager : MonoBehaviour
         deathMessageText.color = new Color(1, 0, 0, 0);
         scoreText.color = new Color(1, 1, 1, 0);
         foreach (var label in labels) label.color = new Color(1, 1, 1, 0);
+        inputs.SetActive(false);
 
         StartCoroutine(Tweens.InterpolateRealTime(
             null,
@@ -68,7 +70,11 @@ public class DeathScreenManager : MonoBehaviour
                 float newAlpha = Tweens.EaseInOutCubic(0f, 1f, t);
                 foreach (var label in labels) label.color = new Color(1, 1, 1, newAlpha);
             },
-            () => { GameManager.Instance.SetGameState(GameManager.GameState.DeathScreen); },
+            () =>
+            {
+                GameManager.Instance.SetGameState(GameManager.GameState.DeathScreen);
+                inputs.SetActive(true);
+            },
             1.5f
         ));
     }
